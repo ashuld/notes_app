@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/database_functions/db_functions.dart';
+import 'package:provider/provider.dart';
 
 import 'screen/notes_page.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  //database intialization
+  WidgetsFlutterBinding.ensureInitialized();
+  await NoteDatabaseFunctions.initDB();
+  runApp(ChangeNotifierProvider(
+    create: (context) => NoteDatabaseFunctions(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
